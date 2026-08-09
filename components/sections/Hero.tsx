@@ -55,7 +55,7 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight"
             >
-              Electronics &amp; VLSI Engineer
+              Electronics &amp; Telecommunication Engineer
             </motion.div>
 
             {/* Rotating words */}
