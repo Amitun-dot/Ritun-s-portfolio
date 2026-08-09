@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 import {
   Mail,
   Linkedin,
@@ -10,26 +10,24 @@ import {
   Send,
   CheckCircle,
   AlertCircle,
-} from 'lucide-react';
-import emailjs from '@emailjs/browser';
-import { profile } from '@/data/portfolio';
-import { Reveal, SectionHeading } from '@/components/common/Reveal';
-import { useState } from 'react';
+} from "lucide-react";
+import emailjs from "@emailjs/browser";
+import { profile } from "@/data/portfolio";
+import { Reveal, SectionHeading } from "@/components/common/Reveal";
+import { useState } from "react";
 
 export default function Contact() {
   const [formState, setFormState] = useState({
-    name: '',
-    email: '',
-    message: '',
+    name: "",
+    email: "",
+    message: "",
   });
 
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState(false);
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setSending(true);
@@ -42,24 +40,23 @@ export default function Contact() {
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
         e.currentTarget,
         {
-          publicKey:
-            process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!,
-        }
+          publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!,
+        },
       );
 
       setSent(true);
 
       setFormState({
-        name: '',
-        email: '',
-        message: '',
+        name: "",
+        email: "",
+        message: "",
       });
 
       setTimeout(() => {
         setSent(false);
       }, 5000);
     } catch (err) {
-      console.error('EmailJS Error:', err);
+      console.error("EmailJS Error:", err);
 
       setError(true);
 
@@ -74,16 +71,12 @@ export default function Contact() {
   return (
     <section id="contact" className="py-24">
       <div className="max-w-6xl mx-auto px-6">
-        <SectionHeading
-          eyebrow="Get In Touch"
-          title="Let's Work Together"
-        />
+        <SectionHeading eyebrow="Get In Touch" title="Let's Work Together" />
 
         <Reveal delay={0.1}>
           <p className="text-sm sm:text-base text-white/50 max-w-2xl mb-12">
-            Interested in VLSI, FPGA, RTL design,
-            embedded systems, or hardware engineering?
-            Let&apos;s connect.
+            Interested in VLSI, FPGA, RTL design, embedded systems, or hardware
+            engineering? Let&apos;s connect.
           </p>
         </Reveal>
 
@@ -93,37 +86,33 @@ export default function Contact() {
             {[
               {
                 icon: Mail,
-                label: 'Email',
+                label: "Email",
                 value: profile.email,
                 href: `mailto:${profile.email}`,
               },
               {
                 icon: MessageCircle,
-                label: 'WhatsApp',
+                label: "WhatsApp",
                 value: profile.whatsapp,
                 href: profile.whatsappUrl,
               },
               {
                 icon: Linkedin,
-                label: 'LinkedIn',
-                value: 'Ritun Panigrahi',
+                label: "LinkedIn",
+                value: "Ritun Panigrahi",
                 href: profile.linkedin,
               },
               {
                 icon: Github,
-                label: 'GitHub',
-                value: 'ritun253254',
+                label: "GitHub",
+                value: "ritun253254",
                 href: profile.github,
               },
             ].map((item, i) => (
               <Reveal key={item.label} delay={i * 0.1}>
                 <a
                   href={item.href}
-                  target={
-                    item.href.startsWith('http')
-                      ? '_blank'
-                      : undefined
-                  }
+                  target={item.href.startsWith("http") ? "_blank" : undefined}
                   rel="noopener noreferrer"
                   className="group flex items-center gap-4 glass rounded-xl p-4 hover:border-cyan/20 transition-all hover:translate-x-1"
                 >
@@ -146,44 +135,79 @@ export default function Contact() {
               </Reveal>
             ))}
 
+            {/* Action buttons */}
             <Reveal delay={0.4}>
               <div className="flex flex-wrap gap-3 mt-2">
+                {/* Email */}
                 <a
                   href={`mailto:${profile.email}`}
-                  className="group flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan to-blue text-bg font-semibold text-sm hover:scale-105 transition-transform"
+                  className="group flex items-center gap-2 px-5 py-2.5 rounded-full
+                 bg-[#E73F1E] text-white
+                 font-semibold text-sm
+                 border border-[#E73F1E]
+                 hover:bg-[#d93617]
+                 hover:border-[#d93617]
+                 hover:scale-105
+                 hover:shadow-[0_0_20px_rgba(231,63,30,0.35)]
+                 transition-all duration-300"
                 >
-                  <Mail className="w-4 h-4" />
-                  Email Me
+                  <Mail className="w-4 h-4 text-white" />
+                  <span className="text-white">Email Me</span>
                 </a>
 
+                {/* LinkedIn */}
                 <a
                   href={profile.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 hover:border-cyan/40 text-sm font-medium hover:bg-white/5 transition-all"
+                  className="group flex items-center gap-2 px-5 py-2.5 rounded-full
+                 bg-gradient-to-r from-cyan to-blue
+                 text-white
+                 font-semibold text-sm
+                 border border-cyan/30
+                 hover:scale-105
+                 hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]
+                 transition-all duration-300"
                 >
-                  <Linkedin className="w-4 h-4" />
-                  LinkedIn
+                  <Linkedin className="w-4 h-4 text-white" />
+                  <span className="text-white">LinkedIn</span>
                 </a>
 
+                {/* GitHub */}
                 <a
                   href={profile.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 hover:border-violet/40 text-sm font-medium hover:bg-white/5 transition-all"
+                  className="group flex items-center gap-2 px-5 py-2.5 rounded-full
+                 bg-[#F7F4ED] text-black
+                 font-semibold text-sm
+                 border border-[#F7F4ED]
+                 hover:bg-white
+                 hover:scale-105
+                 hover:shadow-[0_0_20px_rgba(247,244,237,0.25)]
+                 transition-all duration-300"
                 >
-                  <Github className="w-4 h-4" />
-                  GitHub
+                  <Github className="w-4 h-4 text-black" />
+                  <span className="text-black">GitHub</span>
                 </a>
 
+                {/* WhatsApp */}
                 <a
                   href={profile.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 hover:border-green-400/40 text-sm font-medium hover:bg-white/5 transition-all"
+                  className="group flex items-center gap-2 px-5 py-2.5 rounded-full
+                 bg-[#7EC151] text-white
+                 font-semibold text-sm
+                 border border-[#7EC151]
+                 hover:bg-[#72b347]
+                 hover:border-[#72b347]
+                 hover:scale-105
+                 hover:shadow-[0_0_20px_rgba(126,193,81,0.3)]
+                 transition-all duration-300"
                 >
-                  <MessageCircle className="w-4 h-4" />
-                  WhatsApp
+                  <MessageCircle className="w-4 h-4 text-white" />
+                  <span className="text-white">WhatsApp</span>
                 </a>
               </div>
             </Reveal>
@@ -197,9 +221,7 @@ export default function Contact() {
             >
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-cyan animate-pulse" />
-                <span className="tech-label">
-                  Quick Message
-                </span>
+                <span className="tech-label">Quick Message</span>
               </div>
 
               <div>
@@ -280,22 +302,22 @@ export default function Contact() {
               )}
 
               <button
-                type="submit"
-                disabled={sending}
-                className="group flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-gradient-to-r from-cyan/20 to-violet/20 border border-cyan/30 text-sm font-medium hover:border-cyan/50 transition-all disabled:opacity-50"
-              >
-                {sending ? (
-                  <>
-                    <div className="w-4 h-4 border-2 border-cyan/30 border-t-cyan rounded-full animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    Send Message
-                    <Send className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                  </>
-                )}
-              </button>
+  type="submit"
+  disabled={sending}
+  className="group flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-gradient-to-r from-cyan/70 to-blue/70 text-white font-semibold text-sm border border-cyan/30 hover:scale-[1.02] hover:border-cyan/40 hover:shadow-[0_0_15px_rgba(34,211,238,0.12)] transition-all disabled:opacity-50 disabled:hover:scale-100"
+>
+  {sending ? (
+    <>
+      <div className="w-4 h-4 border-2 border-white/25 border-t-white/80 rounded-full animate-spin" />
+      <span>Sending...</span>
+    </>
+  ) : (
+    <>
+      <span>Send Message</span>
+      <Send className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+    </>
+  )}
+</button>
 
               <p className="text-[10px] text-white/30 text-center">
                 Your message will be delivered directly to my inbox.

@@ -1,18 +1,25 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   Mail,
   Linkedin,
   Github,
   MessageCircle,
-} from 'lucide-react';
-import { profile, heroRotatingWords, heroStats, floatingLabels } from '@/data/portfolio';
-import dynamic from 'next/dynamic';
+} from "lucide-react";
+import {
+  profile,
+  heroRotatingWords,
+  heroStats,
+  floatingLabels,
+} from "@/data/portfolio";
+import dynamic from "next/dynamic";
 
-const Chip3D = dynamic(() => import('@/components/three/Chip3D'), { ssr: false });
+const Chip3D = dynamic(() => import("@/components/three/Chip3D"), {
+  ssr: false,
+});
 
 export default function Hero() {
   const [wordIndex, setWordIndex] = useState(0);
@@ -25,7 +32,10 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center pt-20 pb-12">
+    <section
+      id="home"
+      className="relative min-h-screen flex items-center pt-20 pb-12"
+    >
       <div className="max-w-7xl mx-auto w-full px-5 sm:px-8 grid lg:grid-cols-12 gap-8 items-center">
         {/* LEFT */}
         <div className="lg:col-span-7 flex flex-col gap-6">
@@ -46,7 +56,8 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight"
             >
-              Hi, I&apos;m <span className="gradient-text">{profile.name}</span>.
+              Hi, I&apos;m <span className="gradient-text">{profile.name}</span>
+              .
             </motion.h1>
 
             <motion.div
@@ -100,7 +111,13 @@ export default function Hero() {
             </a>
             <a
               href="#contact"
-              className="group flex items-center gap-2 px-6 py-3 rounded-full border border-white/15 hover:border-cyan/40 text-sm font-medium hover:bg-white/5 transition-all"
+              className="group flex items-center gap-2 px-6 py-3 rounded-full
+    bg-gradient-to-r from-violet to-purple
+    text-white font-semibold text-sm
+    border border-violet/40
+    hover:scale-105
+    hover:shadow-[0_0_30px_rgba(139,92,246,0.3)]
+    transition-all duration-300"
             >
               Hire Me
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -115,20 +132,44 @@ export default function Hero() {
             className="flex items-center gap-3"
           >
             {[
-              { icon: Linkedin, href: profile.linkedin, label: 'LinkedIn' },
-              { icon: Github, href: profile.github, label: 'GitHub' },
-              { icon: Mail, href: `mailto:${profile.email}`, label: 'Email' },
-              { icon: MessageCircle, href: profile.whatsappUrl, label: 'WhatsApp' },
+              {
+                icon: Linkedin,
+                href: profile.linkedin,
+                label: "LinkedIn",
+                hoverClass:
+                  "hover:bg-gradient-to-r hover:from-cyan hover:to-blue hover:text-white hover:border-cyan/40 hover:shadow-[0_0_18px_rgba(34,211,238,0.18)]",
+              },
+              {
+                icon: Github,
+                href: profile.github,
+                label: "GitHub",
+                hoverClass:
+                  "hover:bg-[#F7F4ED] hover:text-black hover:border-[#F7F4ED]/60 hover:shadow-[0_0_18px_rgba(247,244,237,0.15)]",
+              },
+              {
+                icon: Mail,
+                href: `mailto:${profile.email}`,
+                label: "Email",
+                hoverClass:
+                  "hover:bg-[#E73F1E] hover:text-white hover:border-[#E73F1E]/60 hover:shadow-[0_0_18px_rgba(231,63,30,0.18)]",
+              },
+              {
+                icon: MessageCircle,
+                href: profile.whatsappUrl,
+                label: "WhatsApp",
+                hoverClass:
+                  "hover:bg-[#7EC151] hover:text-white hover:border-[#7EC151]/60 hover:shadow-[0_0_18px_rgba(126,193,81,0.18)]",
+              },
             ].map((social) => (
               <a
                 key={social.label}
                 href={social.href}
-                target="_blank"
+                target={social.href.startsWith("http") ? "_blank" : undefined}
                 rel="noopener noreferrer"
                 aria-label={social.label}
-                className="w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-white/50 hover:text-cyan hover:border-cyan/30 hover:scale-110 transition-all"
+                className={`group w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-white/50 hover:scale-110 transition-all duration-300 ${social.hoverClass}`}
               >
-                <social.icon className="w-4 h-4" />
+                <social.icon className="w-4 h-4 transition-colors duration-300" />
               </a>
             ))}
           </motion.div>
@@ -163,12 +204,12 @@ export default function Hero() {
           {/* Floating labels */}
           {floatingLabels.map((label, i) => {
             const positions = [
-              { top: '5%', left: '10%' },
-              { top: '15%', right: '5%' },
-              { bottom: '20%', left: '0%' },
-              { top: '50%', right: '0%' },
-              { bottom: '5%', left: '20%' },
-              { bottom: '40%', right: '10%' },
+              { top: "5%", left: "10%" },
+              { top: "15%", right: "5%" },
+              { bottom: "20%", left: "0%" },
+              { top: "50%", right: "0%" },
+              { bottom: "5%", left: "20%" },
+              { bottom: "40%", right: "10%" },
             ];
             return (
               <motion.div
@@ -176,7 +217,11 @@ export default function Hero() {
                 className="absolute font-mono text-[10px] tracking-[0.2em] text-cyan/40 pointer-events-none hidden sm:block"
                 style={positions[i]}
                 animate={{ y: [0, -8, 0], opacity: [0.3, 0.6, 0.3] }}
-                transition={{ duration: 4 + i, repeat: Infinity, delay: i * 0.3 }}
+                transition={{
+                  duration: 4 + i,
+                  repeat: Infinity,
+                  delay: i * 0.3,
+                }}
               >
                 {label}
               </motion.div>
@@ -208,7 +253,9 @@ export default function Hero() {
         transition={{ delay: 1.5 }}
         className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-[10px] tracking-[0.3em] uppercase text-white/30">Scroll</span>
+        <span className="text-[10px] tracking-[0.3em] uppercase text-white/30">
+          Scroll
+        </span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}

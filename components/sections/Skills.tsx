@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   Cpu,
   CircuitBoard,
@@ -15,9 +15,19 @@ import {
   Users,
   Layers,
   type LucideIcon,
-} from 'lucide-react';
-import { skillCategories, skillNetworkNodes, softSkills, languages } from '@/data/portfolio';
-import { SectionHeading, Reveal, StaggerContainer, StaggerItem } from '@/components/common/Reveal';
+} from "lucide-react";
+import {
+  skillCategories,
+  skillNetworkNodes,
+  softSkills,
+  languages,
+} from "@/data/portfolio";
+import {
+  SectionHeading,
+  Reveal,
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/common/Reveal";
 
 const iconMap: Record<string, LucideIcon> = {
   Cpu,
@@ -39,7 +49,11 @@ export default function Skills() {
   return (
     <section id="skills" className="relative py-24 sm:py-32">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
-        <SectionHeading eyebrow="SKILLS" title="Technical Arsenal" className="mb-16" />
+        <SectionHeading
+          eyebrow="SKILLS"
+          title="Technical Arsenal"
+          className="mb-16"
+        />
 
         {/* Skill network visualization */}
         <Reveal>
@@ -60,20 +74,24 @@ export default function Skills() {
                     <div className="w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center group-hover:border-cyan/30 transition-colors">
                       <Icon className="w-4 h-4 text-cyan/70" />
                     </div>
-                    <h3 className="text-sm font-semibold tracking-wide">{cat.title}</h3>
+                    <h3 className="text-sm font-semibold tracking-wide">
+                      {cat.title}
+                    </h3>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {cat.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="text-xs font-mono px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-white/50 hover:border-cyan/20 hover:text-white/70 transition-colors"
+                        className="text-xs font-mono px-2.5 py-1 rounded-full bg-white/[0.07] border border-white/[0.14] text-white/[0.75] shadow-[0_0_8px_rgba(255,255,255,0.02)] hover:border-cyan/35 hover:text-white hover:bg-cyan/[0.06] hover:shadow-[0_0_10px_rgba(34,211,238,0.08)] transition-all duration-200"
                       >
                         {skill}
                       </span>
                     ))}
                   </div>
                   {cat.note && (
-                    <p className="text-[11px] text-white/30 mt-3 italic">{cat.note}</p>
+                    <p className="text-[11px] text-white/45 mt-3 italic">
+                      {cat.note}
+                    </p>
                   )}
                 </div>
               </Reveal>
@@ -93,7 +111,9 @@ export default function Skills() {
                     <StaggerItem>
                       <div className="glass rounded-lg p-4 flex flex-col items-center gap-2 text-center hover:border-violet/20 transition-colors">
                         <Icon className="w-4 h-4 text-violet/60" />
-                        <span className="text-[11px] text-white/50 leading-tight">{skill.label}</span>
+                        <span className="text-[11px] text-white/50 leading-tight">
+                          {skill.label}
+                        </span>
                       </div>
                     </StaggerItem>
                   </StaggerContainer>
@@ -126,11 +146,12 @@ export default function Skills() {
 
 function SkillNetwork() {
   const center = { x: 150, y: 150 };
-  const radius = 100;
+  const radius = 115;
   const nodeCount = skillNetworkNodes.length;
 
   const nodes = skillNetworkNodes.map((label, i) => {
     const angle = (i / nodeCount) * Math.PI * 2 - Math.PI / 2;
+
     return {
       label,
       x: center.x + Math.cos(angle) * radius,
@@ -139,22 +160,26 @@ function SkillNetwork() {
   });
 
   return (
-    <div className="relative w-full max-w-sm mx-auto aspect-square">
-      <svg viewBox="0 0 300 300" className="w-full h-full">
+    <div className="relative w-full flex justify-center">
+      <svg
+        viewBox="0 0 300 300"
+        className="w-full max-w-[480px] h-auto overflow-visible"
+      >
         {/* Connection lines */}
         {nodes.map((node, i) => (
-          <g key={`line-${i}`}>
+          <g key={`connection-${i}`}>
             <line
               x1={center.x}
               y1={center.y}
               x2={node.x}
               y2={node.y}
-              stroke="rgba(34,211,238,0.15)"
-              strokeWidth="0.5"
+              stroke="rgba(34,211,238,0.16)"
+              strokeWidth="0.7"
             />
-            {/* Animated pulse */}
+
+            {/* Moving signal pulse */}
             <motion.circle
-              r="1.5"
+              r="1.7"
               fill="#22d3ee"
               animate={{
                 cx: [center.x, node.x],
@@ -165,50 +190,161 @@ function SkillNetwork() {
                 duration: 2,
                 repeat: Infinity,
                 delay: i * 0.25,
-                ease: 'linear',
+                ease: "linear",
               }}
             />
           </g>
         ))}
 
         {/* Outer ring */}
-        <circle cx={center.x} cy={center.y} r={radius} fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5" strokeDasharray="2 4" />
+        <circle
+          cx={center.x}
+          cy={center.y}
+          r={radius}
+          fill="none"
+          stroke="rgba(255,255,255,0.07)"
+          strokeWidth="0.6"
+          strokeDasharray="2 4"
+        />
 
-        {/* Center node */}
-        <circle cx={center.x} cy={center.y} r="22" fill="rgba(34,211,238,0.05)" stroke="rgba(34,211,238,0.4)" strokeWidth="1" />
+        {/* ================= CENTER NODE ================= */}
+
+        {/* Center glow */}
         <motion.circle
           cx={center.x}
           cy={center.y}
-          r="22"
+          r="30"
           fill="none"
           stroke="#22d3ee"
-          strokeWidth="0.5"
-          animate={{ r: [22, 30, 22], opacity: [0.4, 0, 0.4] }}
-          transition={{ duration: 3, repeat: Infinity }}
+          strokeWidth="4"
+          opacity="0.08"
+          animate={{
+            r: [28, 38, 28],
+            opacity: [0.08, 0, 0.08],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+          }}
         />
-        <text x={center.x} y={center.y + 3} textAnchor="middle" className="fill-cyan font-bold" style={{ fontSize: 10, fontFamily: 'monospace' }}>
+
+        {/* Center node */}
+        <circle
+          cx={center.x}
+          cy={center.y}
+          r="25"
+          fill="rgba(34,211,238,0.08)"
+          stroke="rgba(34,211,238,0.65)"
+          strokeWidth="1"
+        />
+
+        {/* Center inner glow */}
+        <circle
+          cx={center.x}
+          cy={center.y}
+          r="20"
+          fill="rgba(34,211,238,0.04)"
+          stroke="rgba(34,211,238,0.18)"
+          strokeWidth="0.5"
+        />
+
+        {/* Center pulse */}
+        <motion.circle
+          cx={center.x}
+          cy={center.y}
+          r="25"
+          fill="none"
+          stroke="#22d3ee"
+          strokeWidth="0.7"
+          animate={{
+            r: [25, 34.5, 25],
+            opacity: [0.5, 0, 0.5],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+          }}
+        />
+
+        {/* Center text */}
+        <text
+          x={center.x}
+          y={center.y + 3.5}
+          textAnchor="middle"
+          className="fill-cyan font-bold"
+          style={{
+            fontSize: 10.5,
+            fontFamily: "monospace",
+            letterSpacing: "0.08em",
+          }}
+        >
           RITUN
         </text>
 
-        {/* Surrounding nodes */}
-        {nodes.map((node) => (
+        {/* ================= SKILL NODES ================= */}
+
+        {nodes.map((node, i) => (
           <g key={node.label}>
+            {/* Soft outer glow */}
             <motion.circle
               cx={node.x}
               cy={node.y}
-              r="14"
-              fill="rgba(139,92,246,0.05)"
-              stroke="rgba(139,92,246,0.3)"
-              strokeWidth="0.8"
-              animate={{ r: [14, 16, 14] }}
-              transition={{ duration: 2, repeat: Infinity, delay: Math.random() * 2 }}
+              r="20"
+              fill="none"
+              stroke="#8b5cf6"
+              strokeWidth="4"
+              opacity="0.06"
+              animate={{
+                r: [18, 21, 18],
+                opacity: [0.06, 0.12, 0.06],
+              }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                delay: i * 0.12,
+              }}
             />
+
+            {/* Main skill node */}
+            <motion.circle
+              cx={node.x}
+              cy={node.y}
+              r="16"
+              fill="rgba(139,92,246,0.10)"
+              stroke="rgba(139,92,246,0.55)"
+              strokeWidth="0.9"
+              animate={{
+                r: [16, 17.5, 16],
+              }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                delay: i * 0.12,
+              }}
+            />
+
+            {/* Inner highlight */}
+            <circle
+              cx={node.x}
+              cy={node.y}
+              r="12"
+              fill="rgba(139,92,246,0.035)"
+              stroke="rgba(139,92,246,0.12)"
+              strokeWidth="0.5"
+            />
+
+            {/* Skill label */}
             <text
               x={node.x}
-              y={node.y + 2}
+              y={node.y + 2.3}
               textAnchor="middle"
-              className="fill-white/60"
-              style={{ fontSize: 6, fontFamily: 'monospace' }}
+              className="fill-white"
+              style={{
+                fontSize: 6.5,
+                fontFamily: "monospace",
+                fontWeight: 600,
+                letterSpacing: "0.02em",
+              }}
             >
               {node.label}
             </text>
